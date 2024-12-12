@@ -5,13 +5,18 @@ import sense_hat
 
 
 sense = sense_hat.SenseHat()
+dangerColor = (255, 0, 0)
+dangerThreshold = 1000
 
 def GetData():
     temp = sense.temp * 20
     return int(temp)
 
 def ShowDataOnPi(value):
-    sense.show_message('CO2: ' + str(value))
+    if (value > dangerThreshold):
+        sense.show_message('CO2: ' + str(value), back_colour = dangerColor)
+    else:
+        sense.show_message('CO2: ' + str(value))
 
 SENSOR_ID = 1
 BROADCAST_IP = '<broadcast>'
